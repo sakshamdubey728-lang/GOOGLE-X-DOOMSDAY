@@ -1,0 +1,133 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-display: 'Cinzel', serif;
+    --font-tech: 'Orbitron', sans-serif;
+    --font-sans: 'Plus Jakarta Sans', sans-serif;
+  }
+}
+
+.font-display {
+  font-family: 'Cinzel', serif;
+}
+
+.font-tech {
+  font-family: 'Orbitron', sans-serif;
+}
+
+.font-sans {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #080A09;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2D302F;
+  border-radius: 4px;
+  border: 1px solid #063B27;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #063B27;
+}
+
+/* Custom Metallic & Emerald Glow Gradients */
+.bg-metal-gradient {
+  background: linear-gradient(135deg, #2D302F 0%, #101311 50%, #1A1D1C 100%);
+}
+
+.bg-emerald-glow {
+  background: radial-gradient(circle at center, rgba(6, 59, 39, 0.3) 0%, transparent 70%);
+}
+
+.bg-hero-radial {
+  background: radial-gradient(circle at 50% 30%, rgba(13, 154, 95, 0.15) 0%, rgba(6, 59, 39, 0.25) 40%, rgba(8, 10, 9, 0.95) 85%);
+}
+
+.text-metallic {
+  background: linear-gradient(180deg, #FFFFFF 0%, #B8BAB7 60%, #8D918E 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-emerald-metallic {
+  background: linear-gradient(180deg, #2CF598 0%, #0D9A5F 50%, #063B27 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.border-metallic {
+  border-image: linear-gradient(135deg, rgba(184, 186, 183, 0.4), rgba(45, 48, 47, 0.2), rgba(6, 59, 39, 0.5)) 1;
+}
+
+.emerald-box-shadow {
+  box-shadow: 0 0 20px rgba(13, 154, 95, 0.2), inset 0 0 10px rgba(6, 59, 39, 0.3);
+}
+
+.emerald-box-shadow-lg {
+  box-shadow: 0 0 35px rgba(13, 154, 95, 0.35), 0 0 10px rgba(6, 59, 39, 0.5);
+}
+
+.metallic-card-shadow {
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.8), 0 0 1px 1px rgba(184, 186, 183, 0.15);
+}
+
+/* Metallic shimmer animation */
+@keyframes metallicShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.shimmer-bg {
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(184,186,183,0.2) 50%, rgba(255,255,255,0) 100%);
+  background-size: 200% 100%;
+  animation: metallicShimmer 3s infinite linear;
+}
+
+/* Scanning emerald beam */
+@keyframes scanBeam {
+  0% {
+    top: 0%;
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    opacity: 0.8;
+  }
+}
+
+.animate-scan-beam {
+  animation: scanBeam 2.5s ease-in-out infinite alternate;
+}
+
+/* Pulse energy */
+@keyframes emeraldPulse {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+.animate-emerald-pulse {
+  animation: emeraldPulse 4s infinite ease-in-out;
+}

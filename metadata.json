@@ -1,0 +1,6 @@
+{
+  "name": "Google Merchandise Store — DOOM Edition",
+  "description": "Doctor Doom's Armory: A dark cinematic Avengers: Doomsday edition of the Google Merchandise Store.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
