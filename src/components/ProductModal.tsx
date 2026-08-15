@@ -31,6 +31,18 @@ export const ProductModal: React.FC<ProductModalProps> = ({
   const [isSecured, setIsSecured] = useState(false);
   const [activeTab, setActiveTab] = useState<'overview' | 'specs' | 'story'>('overview');
 
+  const galleryImages = [
+    product.image,
+    ...(product.additionalImages || [])
+  ].filter((img, index, self) => img && self.indexOf(img) === index);
+
+  const [selectedImage, setSelectedImage] = useState<string>(product.image);
+
+  // Sync selected image if product changes
+  React.useEffect(() => {
+    setSelectedImage(product.image);
+  }, [product]);
+
   const handleAddToCart = () => {
     setIsSecured(true);
     soundManager.playPowerPulse();
@@ -93,11 +105,33 @@ export const ProductModal: React.FC<ProductModalProps> = ({
             {/* Large Product Image */}
             <div className="relative z-10 w-full aspect-square max-w-md flex items-center justify-center group">
               <img
-                src={product.image}
+                src={selectedImage}
                 alt={product.name}
                 className="w-full h-full object-contain filter drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)] hover:drop-shadow-[0_0_35px_rgba(44,245,152,0.55)] transition-all duration-700 hover:scale-105 cursor-pointer"
               />
             </div>
+
+            {/* Gallery Thumbnails */}
+            {galleryImages.length > 1 && (
+              <div className="relative z-10 flex items-center justify-center space-x-2 mt-3">
+                {galleryImages.map((img, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => {
+                      setSelectedImage(img);
+                      soundManager.playMetallicClick();
+                    }}
+                    className={`w-12 h-12 rounded-lg p-1 border transition-all cursor-pointer overflow-hidden ${
+                      selectedImage === img
+                        ? 'border-[#2CF598] bg-[#063B27] shadow-[0_0_10px_rgba(44,245,152,0.4)]'
+                        : 'border-[#2D302F] bg-[#101311] opacity-60 hover:opacity-100 hover:border-[#0D9A5F]'
+                    }`}
+                  >
+                    <img src={img} alt={`Thumbnail ${idx + 1}`} className="w-full h-full object-contain" />
+                  </button>
+                ))}
+              </div>
+            )}
 
             {/* Environmental Shadow Base */}
             <div className="w-48 h-4 bg-black/80 blur-md rounded-full mt-2 pointer-events-none" />

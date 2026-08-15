@@ -3,6 +3,11 @@ import hoodieImage from '../assets/images/regenerated_image_1786556411401.png';
 import keyboardImage from '../assets/images/doom_keyboard_1786556549164.jpg';
 import doomsdayTeeImage from '../assets/images/doomsday_tee_1786556713468.jpg';
 import flaskImage from '../assets/images/doomsday_flask_main_1786588232276.jpg';
+import backpackImage from '../assets/images/doomsday_backpack_main_1786589325142.jpg';
+import pinImage from '../assets/images/doomsday_pins_main_1786589760678.jpg';
+import tumblerImage from '../assets/images/doomsday_tumbler_main_1786590665672.jpg';
+import mugImage from '../assets/images/doomsday_mug_main_1786591726675.jpg';
+import journalImage from '../assets/images/doomsday_journal_main_1786618938543.jpg';
 
 // Helper SVG generator for dark armored product renderings
 const createProductSVG = (
@@ -262,6 +267,7 @@ export const PRODUCTS: Product[] = [
     rating: 4.9,
     reviewsCount: 142,
     image: hoodieImage,
+    additionalImages: [hoodieImage, doomsdayTeeImage, pinImage],
     description: 'Forged with high-density Latverian-grade fleece and reinforced shoulder armor plates. Features a water-resistant finish, high-neck magnetic cowl, and an embossed Google x Doom crest.',
     storyCopy: 'Designed for the vanguard who command respect in any environment. Heavyweight 480GSM fabric engineered to withstand harsh mountain winds.',
     features: [
@@ -298,6 +304,7 @@ export const PRODUCTS: Product[] = [
     rating: 4.8,
     reviewsCount: 167,
     image: doomsdayTeeImage,
+    additionalImages: [doomsdayTeeImage, pinImage, hoodieImage],
     description: '300GSM combed cotton boxy tee featuring high-density puff print Latverian Citadel graphics across the back and silver subtle chest branding.',
     storyCopy: 'Thick, structured silhouette designed to hold its boxy drape wash after wash.',
     features: [
@@ -330,7 +337,8 @@ export const PRODUCTS: Product[] = [
     badgeType: 'crimson',
     rating: 4.8,
     reviewsCount: 89,
-    image: flaskImage,
+    image: tumblerImage,
+    additionalImages: [tumblerImage, flaskImage, pinImage],
     description: 'Vacuum-insulated double-wall titanium alloy vessel. Keeps liquids ice-cold for 36 hours or scalding hot for 18 hours. Equipped with an integrated energy core fill window.',
     storyCopy: 'Built to sustain long campaigns across hostile territory. Indestructible titanium build with zero taste retention.',
     features: [
@@ -399,7 +407,7 @@ export const PRODUCTS: Product[] = [
     badgeType: 'emerald',
     rating: 4.7,
     reviewsCount: 31,
-    image: createProductSVG('backpack', '#063B27', '#B8BAB7'),
+    image: backpackImage,
     description: 'Molded hardshell front armor panel protecting laptops up to 16". Features anti-theft hidden zippers, TSA checkpoint-friendly expansion, and weather-sealed storm cuffs.',
     storyCopy: 'Engineered for urban operations and daily field deployment with maximum ergonomic lumbar support.',
     features: [
@@ -432,7 +440,8 @@ export const PRODUCTS: Product[] = [
     badgeType: 'silver',
     rating: 4.9,
     reviewsCount: 210,
-    image: createProductSVG('pin', '#063B27', '#E5E5E0'),
+    image: pinImage,
+    additionalImages: [pinImage, doomsdayTeeImage, hoodieImage],
     description: 'Set of 4 heavy zinc alloy enamel pins featuring the official Latverian Crest, Doom Armor Mask, Google G Cyber Emblem, and Doomsday Monogram.',
     storyCopy: 'Wear the mark of the sovereign ruler. Crafted with hard enamel fill and dual rubber clutch backings.',
     features: [
@@ -463,7 +472,8 @@ export const PRODUCTS: Product[] = [
     badgeType: 'red',
     rating: 4.6,
     reviewsCount: 78,
-    image: createProductSVG('tumbler', '#641719', '#E5E5E0'),
+    image: mugImage,
+    additionalImages: [mugImage, tumblerImage, flaskImage],
     description: 'Triple-insulated stainless steel tumbler with aggressive armor-plate grip ridges and a dark crimson energy ring accent.',
     storyCopy: 'Keep your brew hot during long hours of strategy and engineering in the sanctuary.',
     features: [
@@ -525,7 +535,8 @@ export const PRODUCTS: Product[] = [
     badgeType: 'purple',
     rating: 4.9,
     reviewsCount: 41,
-    image: createProductSVG('journal', '#35143F', '#C0B7A2'),
+    image: journalImage,
+    additionalImages: [journalImage, pinImage, mugImage],
     description: 'Heavyweight 160GSM archivist paper bound in dark distressed eco-leather. Features silver metal corner guards and an expandable back pocket for schematics.',
     storyCopy: 'Where sovereign decrees, technological blueprints, and tactical strategies are inscribed.',
     features: [

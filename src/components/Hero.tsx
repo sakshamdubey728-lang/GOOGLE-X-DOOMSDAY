@@ -1,4 +1,6 @@
 import React from 'react';
+import { Sparkles, ChevronRight, Shield, Cpu } from 'lucide-react';
+import { soundManager } from '../utils/audio';
 
 interface HeroProps {
   onExploreClick: () => void;
@@ -22,8 +24,7 @@ export const Hero: React.FC<HeroProps> = ({
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#063B27]/40 rounded-full blur-[120px] animate-emerald-pulse pointer-events-none" />
 
       {/* Hero Visual Content Container */}
-      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
-      </div>
+      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center" />
 
       {/* Bottom Frame Divider */}
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#0D9A5F] to-transparent opacity-60" />
