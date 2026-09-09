@@ -131,3 +131,27 @@
 .animate-emerald-pulse {
   animation: emeraldPulse 4s infinite ease-in-out;
 }
+
+/* Thermal Vision FLIR Heat Map Filter */
+.thermal-vision-active {
+  filter: url(#thermal-vision-filter) contrast(155%) brightness(108%);
+  transition: filter 0.4s ease-in-out;
+}
+
+@supports not (filter: url(#thermal-vision-filter)) {
+  .thermal-vision-active {
+    filter: invert(85%) hue-rotate(240deg) saturate(320%) contrast(180%) brightness(1.1);
+  }
+}
+
+/* Thermal scanlines overlay */
+.thermal-scanlines {
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.18),
+    rgba(0, 0, 0, 0.18) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+}

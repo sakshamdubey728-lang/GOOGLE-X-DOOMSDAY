@@ -11,12 +11,10 @@ export interface Product {
   rating: number;
   reviewsCount: number;
   image: string;
-  additionalImages?: string[];
   description: string;
   storyCopy?: string;
   features: string[];
   specs: { label: string; value: string }[];
-  colors: { name: string; hex: string }[];
   sizes?: string[];
   stock: number;
   isClassified?: boolean;
@@ -25,7 +23,6 @@ export interface Product {
 export interface CartItem {
   product: Product;
   quantity: number;
-  selectedColor?: string;
   selectedSize?: string;
 }
 

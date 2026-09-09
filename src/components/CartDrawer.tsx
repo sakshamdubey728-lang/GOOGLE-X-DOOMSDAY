@@ -117,16 +117,18 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
             ) : (
               cartItems.map((item) => (
                 <div
-                  key={`${item.product.id}-${item.selectedColor}-${item.selectedSize}`}
+                  key={`${item.product.id}-${item.selectedSize || 'default'}`}
                   className="p-4 rounded-xl bg-[#101311] border border-[#2D302F] flex items-center space-x-4 relative group"
                 >
                   {/* Thumbnail */}
                   <div className="w-20 h-20 rounded-lg bg-[#080A09] border border-[#2D302F] p-2 shrink-0 flex items-center justify-center">
-                    <img
-                      src={item.product.image}
-                      alt={item.product.name}
-                      className="w-full h-full object-contain"
-                    />
+                    {item.product.image ? (
+                      <img
+                        src={item.product.image}
+                        alt={item.product.name}
+                        className="w-full h-full object-contain"
+                      />
+                    ) : null}
                   </div>
 
                   {/* Info */}
@@ -135,10 +137,11 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                       {item.product.name}
                     </h4>
                     
-                    <div className="font-tech text-[10px] text-[#8D918E] mt-0.5 space-x-2">
-                      {item.selectedColor && <span>COLOR: {item.selectedColor}</span>}
-                      {item.selectedSize && <span>SIZE: {item.selectedSize}</span>}
-                    </div>
+                    {item.selectedSize && (
+                      <div className="font-tech text-[10px] text-[#8D918E] mt-0.5">
+                        <span>SIZE: {item.selectedSize}</span>
+                      </div>
+                    )}
 
                     <div className="font-tech text-sm font-extrabold text-[#2CF598] mt-1">
                       {formatPrice(item.product.price * item.quantity)}

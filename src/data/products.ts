@@ -12,7 +12,6 @@ import chargerImage from '../assets/images/doomsday_wireless_charger_17868950192
 import deskpadImage from '../assets/images/doomsday_deskpad_main_1786895514659.jpg';
 import capImage from '../assets/images/doomsday_cap_main_1786896312312.jpg';
 import budsImage from '../assets/images/doomsday_pixel_buds_main_1786896573382.jpg';
-import premiumHoodieBanner from '../assets/images/premium_hoodie_banner_1788943621746.jpg';
 
 // Helper SVG generator for dark armored product renderings
 const createProductSVG = (
@@ -272,7 +271,6 @@ export const PRODUCTS: Product[] = [
     rating: 4.9,
     reviewsCount: 142,
     image: hoodieImage,
-    additionalImages: [hoodieImage, premiumHoodieBanner, doomsdayTeeImage, pinImage],
     description: 'Forged with high-density Latverian-grade fleece and reinforced shoulder armor plates. Features a water-resistant finish, high-neck magnetic cowl, and an embossed Google x Doom crest.',
     storyCopy: 'Designed for the vanguard who command respect in any environment. Heavyweight 480GSM fabric engineered to withstand harsh mountain winds.',
     features: [
@@ -287,11 +285,6 @@ export const PRODUCTS: Product[] = [
       { label: 'Fit', value: 'Over-sized Tactical Cut' },
       { label: 'Weight', value: '480 GSM' },
       { label: 'Care', value: 'Machine Wash Cold / Air Dry' }
-    ],
-    colors: [
-      { name: 'Dark Emerald', hex: '#063B27' },
-      { name: 'Charcoal Black', hex: '#101311' },
-      { name: 'Fractured Silver', hex: '#B8BAB7' }
     ],
     sizes: ['S', 'M', 'L', 'XL', '2XL'],
     stock: 24,
@@ -309,7 +302,6 @@ export const PRODUCTS: Product[] = [
     rating: 4.8,
     reviewsCount: 167,
     image: doomsdayTeeImage,
-    additionalImages: [doomsdayTeeImage, pinImage, hoodieImage],
     description: '300GSM combed cotton boxy tee featuring high-density puff print Latverian Citadel graphics across the back and silver subtle chest branding.',
     storyCopy: 'Thick, structured silhouette designed to hold its boxy drape wash after wash.',
     features: [
@@ -321,11 +313,6 @@ export const PRODUCTS: Product[] = [
     specs: [
       { label: 'Fit', value: 'Boxy / Dropped Shoulder' },
       { label: 'Care', value: 'Machine wash inside out' }
-    ],
-    colors: [
-      { name: 'Pure White', hex: '#FFFFFF' },
-      { name: 'Charcoal Black', hex: '#080A09' },
-      { name: 'Dark Emerald', hex: '#063B27' }
     ],
     sizes: ['S', 'M', 'L', 'XL', '2XL'],
     stock: 30,
@@ -342,8 +329,7 @@ export const PRODUCTS: Product[] = [
     badgeType: 'crimson',
     rating: 4.8,
     reviewsCount: 89,
-    image: tumblerImage,
-    additionalImages: [tumblerImage, flaskImage, pinImage],
+    image: flaskImage,
     description: 'Vacuum-insulated double-wall titanium alloy vessel. Keeps liquids ice-cold for 36 hours or scalding hot for 18 hours. Equipped with an integrated energy core fill window.',
     storyCopy: 'Built to sustain long campaigns across hostile territory. Indestructible titanium build with zero taste retention.',
     features: [
@@ -358,10 +344,6 @@ export const PRODUCTS: Product[] = [
       { label: 'Weight', value: '280g' },
       { label: 'Thermal Rating', value: 'Hot: 18h / Cold: 36h' },
       { label: 'BPA Free', value: '100% Certified' }
-    ],
-    colors: [
-      { name: 'Fractured Silver', hex: '#B8BAB7' },
-      { name: 'Obsidian Black', hex: '#080A09' }
     ],
     stock: 12,
     isClassified: false
@@ -394,10 +376,6 @@ export const PRODUCTS: Product[] = [
       { label: 'Battery', value: '4000 mAh (120 Hours)' },
       { label: 'Weight', value: '1.45 kg' }
     ],
-    colors: [
-      { name: 'Obsidian & Emerald', hex: '#063B27' },
-      { name: 'Deep Purple & Silver', hex: '#35143F' }
-    ],
     stock: 7,
     isClassified: true
   },
@@ -427,10 +405,6 @@ export const PRODUCTS: Product[] = [
       { label: 'Dimensions', value: '48 x 32 x 18 cm' },
       { label: 'Material', value: '1680D Cordura Ballistic Nylon' }
     ],
-    colors: [
-      { name: 'Obsidian Black', hex: '#101311' },
-      { name: 'Tactical Gray', hex: '#565A58' }
-    ],
     stock: 19,
     isClassified: false
   },
@@ -446,7 +420,6 @@ export const PRODUCTS: Product[] = [
     rating: 4.9,
     reviewsCount: 210,
     image: pinImage,
-    additionalImages: [pinImage, doomsdayTeeImage, hoodieImage],
     description: 'Set of 4 heavy zinc alloy enamel pins featuring the official Latverian Crest, Doom Armor Mask, Google G Cyber Emblem, and Doomsday Monogram.',
     storyCopy: 'Wear the mark of the sovereign ruler. Crafted with hard enamel fill and dual rubber clutch backings.',
     features: [
@@ -459,9 +432,6 @@ export const PRODUCTS: Product[] = [
       { label: 'Quantity', value: '4 Pins Included' },
       { label: 'Size', value: '35mm - 45mm' },
       { label: 'Finish', value: 'Fractured Antique Silver' }
-    ],
-    colors: [
-      { name: 'Antique Silver & Emerald', hex: '#B8BAB7' }
     ],
     stock: 45,
     isClassified: false
@@ -477,8 +447,7 @@ export const PRODUCTS: Product[] = [
     badgeType: 'red',
     rating: 4.6,
     reviewsCount: 78,
-    image: mugImage,
-    additionalImages: [mugImage, tumblerImage, flaskImage],
+    image: tumblerImage,
     description: 'Triple-insulated stainless steel tumbler with aggressive armor-plate grip ridges and a dark crimson energy ring accent.',
     storyCopy: 'Keep your brew hot during long hours of strategy and engineering in the sanctuary.',
     features: [
@@ -490,10 +459,6 @@ export const PRODUCTS: Product[] = [
     specs: [
       { label: 'Capacity', value: '20 oz / 600 ml' },
       { label: 'Insulation', value: '12h Hot / 24h Cold' }
-    ],
-    colors: [
-      { name: 'Crimson & Charcoal', hex: '#641719' },
-      { name: 'Emerald & Obsidian', hex: '#063B27' }
     ],
     stock: 5,
     isClassified: false
@@ -510,7 +475,6 @@ export const PRODUCTS: Product[] = [
     rating: 4.9,
     reviewsCount: 68,
     image: chargerImage,
-    additionalImages: [chargerImage, journalImage, mugImage],
     description: '3-in-1 MagSafe-compatible tactical wireless charging dock with multi-device support for phone, smartwatch, and earbuds, crafted in distressed titanium with Doom crest detailing.',
     storyCopy: 'Instantly energize your entire tactical tech loadout with sovereign power and precision magnetic alignment.',
     features: [
@@ -523,10 +487,6 @@ export const PRODUCTS: Product[] = [
       { label: 'Input', value: 'Type-C PD 30W' },
       { label: 'Compatibility', value: 'MagSafe iPhone, Pixel, Apple/Pixel Watch, Qi Earbuds' },
       { label: 'Cable Length', value: '1.5 Meter Braided Latverian Cable Included' }
-    ],
-    colors: [
-      { name: 'Weathered Armor & Emerald', hex: '#063B27' },
-      { name: 'Obsidian Dark Metal', hex: '#101311' }
     ],
     stock: 28,
     isClassified: false
@@ -543,7 +503,6 @@ export const PRODUCTS: Product[] = [
     rating: 4.9,
     reviewsCount: 41,
     image: journalImage,
-    additionalImages: [journalImage, pinImage, mugImage],
     description: 'Heavyweight 160GSM archivist paper bound in dark distressed eco-leather. Features silver metal corner guards and an expandable back pocket for schematics.',
     storyCopy: 'Where sovereign decrees, technological blueprints, and tactical strategies are inscribed.',
     features: [
@@ -556,10 +515,6 @@ export const PRODUCTS: Product[] = [
     specs: [
       { label: 'Format', value: 'A5 (148 x 210 mm)' },
       { label: 'Binding', value: '180° Lay-Flat Thread Bound' }
-    ],
-    colors: [
-      { name: 'Dark Ash & Silver', hex: '#726C60' },
-      { name: 'Royal Purple', hex: '#35143F' }
     ],
     stock: 15,
     isClassified: true
@@ -576,7 +531,6 @@ export const PRODUCTS: Product[] = [
     rating: 4.9,
     reviewsCount: 28,
     image: deskpadImage,
-    additionalImages: [deskpadImage, keyboardImage, chargerImage],
     description: '900x400mm waterproof desk mat featuring a micro-textured cloth tracking surface, stitched emerald edges, and anti-slip rubber base.',
     storyCopy: 'Frame your workstation with sovereign precision and buttery mouse sensor accuracy.',
     features: [
@@ -588,9 +542,6 @@ export const PRODUCTS: Product[] = [
     specs: [
       { label: 'Dimensions', value: '900 x 400 x 4 mm' },
       { label: 'Weight', value: '850g' }
-    ],
-    colors: [
-      { name: 'Tactical Grid & Emerald', hex: '#063B27' }
     ],
     stock: 22,
     isClassified: false
@@ -607,7 +558,6 @@ export const PRODUCTS: Product[] = [
     rating: 4.8,
     reviewsCount: 62,
     image: capImage,
-    additionalImages: [capImage, doomsdayTeeImage, backpackImage],
     description: 'Distressed acid-washed dark canvas cap with 3D raised white embroidered Google logo, apocalyptic skyline backdrop print, and battle-weathered DOOMSDAY graffiti visor.',
     storyCopy: 'Shield your vision against the radioactive fallout of the old world.',
     features: [
@@ -620,10 +570,6 @@ export const PRODUCTS: Product[] = [
     specs: [
       { label: 'Size', value: 'One Size Fits Most (Adjustable Strap)' },
       { label: 'Material', value: '100% Acid-Washed Heavyweight Cotton' }
-    ],
-    colors: [
-      { name: 'Weathered Charcoal', hex: '#1C1F1D' },
-      { name: 'Dark Emerald Wash', hex: '#063B27' }
     ],
     sizes: ['One Size'],
     stock: 6,
@@ -642,7 +588,6 @@ export const PRODUCTS: Product[] = [
     rating: 4.9,
     reviewsCount: 93,
     image: budsImage,
-    additionalImages: [budsImage, chargerImage, keyboardImage],
     description: 'Active Noise Canceling earbuds with custom 11mm titanium drivers, spatial audio tracking, and a battle-weathered apocalyptic stone/metal wireless charging case with biohazard graphics.',
     storyCopy: 'Silence the noise of lesser minds. Immerse yourself in total acoustic command amidst the ruins.',
     features: [
@@ -656,10 +601,6 @@ export const PRODUCTS: Product[] = [
       { label: 'ANC Mode', value: 'Hybrid Triple-Microphone' },
       { label: 'Bluetooth', value: 'v5.3 Multipoint' },
       { label: 'Case Charging', value: 'Qi Wireless & Type-C Fast Charge' }
-    ],
-    colors: [
-      { name: 'Weathered Apocalypse Stone', hex: '#1F2220' },
-      { name: 'Obsidian Black', hex: '#101311' }
     ],
     stock: 9,
     isClassified: false

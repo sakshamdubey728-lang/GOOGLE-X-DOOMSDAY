@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, useCallback } from 'react';
 import { PRODUCTS } from './data/products';
 import { Product, CartItem } from './types';
 import { LoadingScreen } from './components/LoadingScreen';
@@ -16,6 +16,8 @@ import { CartDrawer } from './components/CartDrawer';
 import { CheckoutModal } from './components/CheckoutModal';
 import { SearchOverlay } from './components/SearchOverlay';
 import { ParticleCanvas } from './components/ParticleCanvas';
+import { SparkCursor } from './components/SparkCursor';
+import { ThermalVisionHUD } from './components/ThermalVisionHUD';
 import { EasterEggs } from './components/EasterEggs';
 import { Footer } from './components/Footer';
 import { CurrencyExchangeMeter } from './components/CurrencyExchangeMeter';
@@ -41,6 +43,44 @@ export default function App() {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [discountPercentage, setDiscountPercentage] = useState(0);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  
+  // Thermal Vision State (Limited-Time FLIR Heat Map Filter)
+  const [isThermalActive, setIsThermalActive] = useState(false);
+  const [thermalTimeLeft, setThermalTimeLeft] = useState(0);
+  const THERMAL_DURATION = 15; // 15 seconds duration
+
+  const handleToggleThermalVision = useCallback(() => {
+    setIsThermalActive((prev) => {
+      const nextState = !prev;
+      if (nextState) {
+        setThermalTimeLeft(THERMAL_DURATION);
+        soundManager.playThermalEngage();
+      } else {
+        setThermalTimeLeft(0);
+        soundManager.playThermalDisengage();
+      }
+      return nextState;
+    });
+  }, []);
+
+  // Thermal Vision auto-expiration timer
+  useEffect(() => {
+    if (!isThermalActive) return;
+
+    const interval = setInterval(() => {
+      setThermalTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          setIsThermalActive(false);
+          soundManager.playThermalDisengage();
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [isThermalActive]);
   
   // Easter egg counter
   const [emblemClickCount, setEmblemClickCount] = useState(0);
@@ -82,12 +122,11 @@ export default function App() {
   }, [activeTab, selectedCategory, selectedCollectionFilter, sortBy, wishlist]);
 
   // Cart operations
-  const handleAddToCart = (product: Product, selectedColor?: string, selectedSize?: string) => {
+  const handleAddToCart = (product: Product, selectedSize?: string) => {
     setCart((prev) => {
       const existingIndex = prev.findIndex(
         (item) =>
           item.product.id === product.id &&
-          item.selectedColor === selectedColor &&
           item.selectedSize === selectedSize
       );
 
@@ -101,7 +140,6 @@ export default function App() {
           {
             product,
             quantity: 1,
-            selectedColor: selectedColor || (product.colors?.[0]?.name ?? ''),
             selectedSize: selectedSize || (product.sizes?.[0] ?? ''),
           },
         ];
@@ -142,10 +180,26 @@ export default function App() {
   const totalCartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
-    <div className="min-h-screen bg-[#080A09] text-[#E5E5E0] font-sans antialiased relative selection:bg-[#063B27] selection:text-[#2CF598]">
+    <div
+      id="app-root"
+      className={`min-h-screen bg-[#080A09] text-[#E5E5E0] font-sans antialiased relative selection:bg-[#063B27] selection:text-[#2CF598] transition-[filter] duration-500 ${
+        isThermalActive ? 'thermal-vision-active' : ''
+      }`}
+    >
       
       {/* Particle Fog Background Canvas */}
       <ParticleCanvas />
+
+      {/* Interactive Cursor Touch Sparks */}
+      <SparkCursor />
+
+      {/* Thermal Vision HUD & SVG Filter Defs */}
+      <ThermalVisionHUD
+        isActive={isThermalActive}
+        timeLeft={thermalTimeLeft}
+        totalDuration={THERMAL_DURATION}
+        onDisengage={handleToggleThermalVision}
+      />
 
       {/* Loading Screen Intro ("THE AWAKENING") */}
       {showAwakeningIntro && (
@@ -170,6 +224,9 @@ export default function App() {
         onOpenCart={() => setIsCartOpen(true)}
         onOpenSearch={() => setIsSearchOpen(true)}
         onEmblemClick={() => setEmblemClickCount((prev) => prev + 1)}
+        isThermalActive={isThermalActive}
+        thermalTimeLeft={thermalTimeLeft}
+        onToggleThermalVision={handleToggleThermalVision}
       />
 
       {/* App Main Content Container */}
@@ -298,9 +355,10 @@ export default function App() {
           {/* Product Cards Grid */}
           {filteredProducts.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {filteredProducts.map((product) => (
+              {filteredProducts.map((product, index) => (
                 <ProductCard
-                  key={product.id}
+                  key={`${selectedCategory}-${sortBy}-${product.id}`}
+                  index={index}
                   product={product}
                   onQuickView={(p) => setSelectedProduct(p)}
                   onAddToCart={(p) => handleAddToCart(p)}
@@ -349,18 +407,20 @@ export default function App() {
       {/* MODALS & OVERLAYS */}
       
       {/* Product Quick Examine Modal */}
-      <ProductModal
-        product={selectedProduct}
-        onClose={() => setSelectedProduct(null)}
-        onAddToCart={handleAddToCart}
-        onToggleWishlist={handleToggleWishlist}
-        isWishlisted={selectedProduct ? wishlist.some((w) => w.id === selectedProduct.id) : false}
-        onBuyNow={(product, color, size) => {
-          handleAddToCart(product, color, size);
-          setSelectedProduct(null);
-          setIsCartOpen(true);
-        }}
-      />
+      {selectedProduct && (
+        <ProductModal
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+          onAddToCart={handleAddToCart}
+          onToggleWishlist={handleToggleWishlist}
+          isWishlisted={wishlist.some((w) => w.id === selectedProduct.id)}
+          onBuyNow={(product, size) => {
+            handleAddToCart(product, size);
+            setSelectedProduct(null);
+            setIsCartOpen(true);
+          }}
+        />
+      )}
 
       {/* Armory Cart Drawer */}
       <CartDrawer

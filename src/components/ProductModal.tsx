@@ -7,10 +7,10 @@ import { useCurrency } from '../context/CurrencyContext';
 interface ProductModalProps {
   product: Product | null;
   onClose: () => void;
-  onAddToCart: (product: Product, selectedColor?: string, selectedSize?: string) => void;
+  onAddToCart: (product: Product, selectedSize?: string) => void;
   onToggleWishlist: (product: Product) => void;
   isWishlisted: boolean;
-  onBuyNow: (product: Product, selectedColor?: string, selectedSize?: string) => void;
+  onBuyNow: (product: Product, selectedSize?: string) => void;
 }
 
 export const ProductModal: React.FC<ProductModalProps> = ({
@@ -23,37 +23,25 @@ export const ProductModal: React.FC<ProductModalProps> = ({
 }) => {
   const { currentCurrency, formatPrice, openMeter } = useCurrency();
 
-  const [selectedColor, setSelectedColor] = useState(
-    product?.colors && product.colors.length > 0 ? product.colors[0].name : ''
-  );
   const [selectedSize, setSelectedSize] = useState(
     product?.sizes && product.sizes.length > 0 ? product.sizes[0] : ''
   );
   const [isSecured, setIsSecured] = useState(false);
   const [activeTab, setActiveTab] = useState<'overview' | 'specs' | 'story'>('overview');
 
-  const [selectedImage, setSelectedImage] = useState<string>(product?.image || '');
-
-  // Sync selected image if product changes
+  // Sync selected size if product changes
   React.useEffect(() => {
     if (product) {
-      setSelectedImage(product.image);
-      setSelectedColor(product.colors && product.colors.length > 0 ? product.colors[0].name : '');
       setSelectedSize(product.sizes && product.sizes.length > 0 ? product.sizes[0] : '');
     }
   }, [product]);
 
   if (!product) return null;
 
-  const galleryImages = [
-    product.image,
-    ...(product.additionalImages || [])
-  ].filter((img, index, self) => img && self.indexOf(img) === index);
-
   const handleAddToCart = () => {
     setIsSecured(true);
     soundManager.playPowerPulse();
-    onAddToCart(product, selectedColor, selectedSize);
+    onAddToCart(product, selectedSize);
 
     setTimeout(() => {
       setIsSecured(false);
@@ -62,7 +50,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
 
   const handleBuyNow = () => {
     soundManager.playPowerPulse();
-    onBuyNow(product, selectedColor, selectedSize);
+    onBuyNow(product, selectedSize);
   };
 
   return (
@@ -111,34 +99,14 @@ export const ProductModal: React.FC<ProductModalProps> = ({
 
             {/* Large Product Image */}
             <div className="relative z-10 w-full aspect-square max-w-md flex items-center justify-center group">
-              <img
-                src={selectedImage}
-                alt={product.name}
-                className="w-full h-full object-contain filter drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)] hover:drop-shadow-[0_0_35px_rgba(44,245,152,0.55)] transition-all duration-700 hover:scale-105 cursor-pointer"
-              />
+              {product.image ? (
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="w-full h-full object-contain filter drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)] hover:drop-shadow-[0_0_35px_rgba(44,245,152,0.55)] transition-all duration-700 hover:scale-105 select-none"
+                />
+              ) : null}
             </div>
-
-            {/* Gallery Thumbnails */}
-            {galleryImages.length > 1 && (
-              <div className="relative z-10 flex items-center justify-center space-x-2 mt-3">
-                {galleryImages.map((img, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => {
-                      setSelectedImage(img);
-                      soundManager.playMetallicClick();
-                    }}
-                    className={`w-12 h-12 rounded-lg p-1 border transition-all cursor-pointer overflow-hidden ${
-                      selectedImage === img
-                        ? 'border-[#2CF598] bg-[#063B27] shadow-[0_0_10px_rgba(44,245,152,0.4)]'
-                        : 'border-[#2D302F] bg-[#101311] opacity-60 hover:opacity-100 hover:border-[#0D9A5F]'
-                    }`}
-                  >
-                    <img src={img} alt={`Thumbnail ${idx + 1}`} className="w-full h-full object-contain" />
-                  </button>
-                ))}
-              </div>
-            )}
 
             {/* Environmental Shadow Base */}
             <div className="w-48 h-4 bg-black/80 blur-md rounded-full mt-2 pointer-events-none" />
@@ -270,34 +238,6 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                   </blockquote>
                 )}
               </div>
-
-              {/* Color Selector */}
-              {product.colors && product.colors.length > 0 && (
-                <div className="mb-5">
-                  <div className="font-tech text-xs tracking-wider text-[#8D918E] uppercase mb-2">
-                    FINISH / COLOR: <span className="text-[#2CF598] font-bold">{selectedColor}</span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    {product.colors.map((color) => (
-                      <button
-                        key={color.name}
-                        onClick={() => setSelectedColor(color.name)}
-                        className={`w-8 h-8 rounded-full border-2 transition-all flex items-center justify-center cursor-pointer ${
-                          selectedColor === color.name
-                            ? 'border-[#2CF598] scale-110 shadow-[0_0_10px_#2CF598]'
-                            : 'border-[#2D302F] hover:border-[#8D918E]'
-                        }`}
-                        style={{ backgroundColor: color.hex }}
-                        title={color.name}
-                      >
-                        {selectedColor === color.name && (
-                          <Check className="w-4 h-4 text-white drop-shadow" />
-                        )}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
 
               {/* Size Selector (If Apparel) */}
               {product.sizes && product.sizes.length > 0 && (

@@ -111,6 +111,60 @@ class SoundManager {
       // Ignore
     }
   }
+
+  // Thermal vision engaging optic sweep
+  public playThermalEngage() {
+    if (this.isMuted) return;
+    this.initContext();
+    if (!this.ctx) return;
+
+    try {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(180, this.ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(1400, this.ctx.currentTime + 0.3);
+
+      gain.gain.setValueAtTime(0.15, this.ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.35);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start();
+      osc.stop(this.ctx.currentTime + 0.35);
+    } catch {
+      // Ignore
+    }
+  }
+
+  // Thermal vision disengage power down
+  public playThermalDisengage() {
+    if (this.isMuted) return;
+    this.initContext();
+    if (!this.ctx) return;
+
+    try {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(700, this.ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(90, this.ctx.currentTime + 0.25);
+
+      gain.gain.setValueAtTime(0.12, this.ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.28);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start();
+      osc.stop(this.ctx.currentTime + 0.28);
+    } catch {
+      // Ignore
+    }
+  }
 }
 
 export const soundManager = new SoundManager();

@@ -125,11 +125,13 @@ export const SearchOverlay: React.FC<SearchOverlayProps> = ({
                 className="p-4 rounded-xl bg-[#101311] border border-[#2D302F] hover:border-[#0D9A5F] flex items-center space-x-4 cursor-pointer group transition-all"
               >
                 <div className="w-16 h-16 rounded-lg bg-[#080A09] border border-[#2D302F] p-2 shrink-0">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-full object-contain"
-                  />
+                  {product.image ? (
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="w-full h-full object-contain"
+                    />
+                  ) : null}
                 </div>
                 <div className="flex-1 min-w-0">
                   <h4 className="font-display font-bold text-xs text-[#E5E5E0] group-hover:text-[#2CF598] truncate">

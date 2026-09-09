@@ -88,12 +88,14 @@ export const Hero: React.FC<HeroProps> = ({
 
           {/* Banner Graphic Showcase */}
           <div className="relative w-full aspect-[16/9] max-h-[560px] bg-[#072217] overflow-hidden flex items-center justify-center">
-            <img
-              src={bannerImage}
-              alt="Premium Hoodie 15% OFF For First 39 Customers"
-              className="w-full h-full object-cover object-center group-hover:scale-[1.02] transition-transform duration-700 select-none"
-              loading="eager"
-            />
+            {bannerImage ? (
+              <img
+                src={bannerImage}
+                alt="Premium Hoodie 15% OFF For First 39 Customers"
+                className="w-full h-full object-cover object-center group-hover:scale-[1.02] transition-transform duration-700 select-none"
+                loading="eager"
+              />
+            ) : null}
             
             {/* Subtle Gradient Vignette Over Image */}
             <div className="absolute inset-0 bg-gradient-to-t from-[#080A09] via-transparent to-transparent opacity-80 md:opacity-40 pointer-events-none" />

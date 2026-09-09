@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, ShoppingBag, Bookmark, Volume2, VolumeX, Menu, X, Shield, ArrowRightLeft } from 'lucide-react';
+import { Search, ShoppingBag, Bookmark, Volume2, VolumeX, Menu, X, Shield, ArrowRightLeft, Flame } from 'lucide-react';
 import { soundManager } from '../utils/audio';
 import { useCurrency } from '../context/CurrencyContext';
 
@@ -11,6 +11,9 @@ interface NavbarProps {
   onOpenCart: () => void;
   onOpenSearch: () => void;
   onEmblemClick: () => void;
+  isThermalActive?: boolean;
+  thermalTimeLeft?: number;
+  onToggleThermalVision?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -21,6 +24,9 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenCart,
   onOpenSearch,
   onEmblemClick,
+  isThermalActive = false,
+  thermalTimeLeft = 0,
+  onToggleThermalVision,
 }) => {
   const { currentCurrency, openMeter, formatPrice } = useCurrency();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -136,6 +142,36 @@ export const Navbar: React.FC<NavbarProps> = ({
               {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-[#2CF598] animate-pulse" />}
             </button>
 
+            {/* Thermal Vision Toggle Button */}
+            {onToggleThermalVision && (
+              <button
+                id="thermal-vision-toggle-btn"
+                onClick={onToggleThermalVision}
+                title={
+                  isThermalActive
+                    ? `Thermal Vision Online [${thermalTimeLeft}s remaining] - Click to disengage`
+                    : 'Toggle FLIR Thermal Vision Filter (Orange/Yellow/Purple Heatmap)'
+                }
+                className={`relative flex items-center space-x-1.5 px-3 py-2 rounded-lg font-tech text-xs tracking-wider transition-all cursor-pointer group ${
+                  isThermalActive
+                    ? 'bg-gradient-to-r from-[#9400D3] via-[#FF4500] to-[#FFD700] text-white border border-[#FFD700] shadow-[0_0_20px_rgba(255,69,0,0.6)] animate-pulse'
+                    : 'bg-[#101311] border border-[#2D302F] text-[#B8BAB7] hover:text-[#FF8C00] hover:border-[#FF4500] hover:shadow-[0_0_14px_rgba(255,140,0,0.35)]'
+                }`}
+              >
+                <Flame
+                  className={`w-4 h-4 transition-transform group-hover:scale-110 ${
+                    isThermalActive ? 'text-[#FFD700] animate-bounce' : 'text-[#FF8C00]'
+                  }`}
+                />
+                <span className="font-tech text-xs tracking-wider font-bold hidden sm:inline-block">
+                  {isThermalActive ? `THERMAL [${thermalTimeLeft}s]` : 'THERMAL'}
+                </span>
+                {isThermalActive && (
+                  <span className="w-2 h-2 rounded-full bg-[#FFD700] animate-ping ml-0.5" />
+                )}
+              </button>
+            )}
+
             {/* Search Button ("SCAN ARSENAL") */}
             <button
               onClick={onOpenSearch}
@@ -248,6 +284,29 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
             <span className="text-xs text-[#2CF598] font-tech font-bold uppercase underline">METER ▾</span>
           </button>
+
+          {/* Mobile Thermal Vision Toggle */}
+          {onToggleThermalVision && (
+            <button
+              onClick={() => {
+                onToggleThermalVision();
+                setIsMobileMenuOpen(false);
+              }}
+              className={`w-full text-left px-4 py-3 rounded-lg font-tech text-sm tracking-wider flex items-center justify-between cursor-pointer transition-all ${
+                isThermalActive
+                  ? 'bg-gradient-to-r from-[#9400D3]/40 via-[#FF4500]/40 to-[#FFD700]/40 text-[#FFD700] border border-[#FFD700]'
+                  : 'bg-[#101311] text-[#B8BAB7] border border-[#2D302F] hover:border-[#FF4500]'
+              }`}
+            >
+              <div className="flex items-center space-x-2">
+                <Flame className={`w-4 h-4 ${isThermalActive ? 'text-[#FFD700]' : 'text-[#FF8C00]'}`} />
+                <span>THERMAL VISION FILTER</span>
+              </div>
+              <span className={`text-xs font-bold ${isThermalActive ? 'text-[#FFD700]' : 'text-[#8D918E]'}`}>
+                {isThermalActive ? `ONLINE [${thermalTimeLeft}s]` : 'ENGAGE'}
+              </span>
+            </button>
+          )}
         </div>
       )}
     </header>
