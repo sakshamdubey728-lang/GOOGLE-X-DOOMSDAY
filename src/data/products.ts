@@ -8,6 +8,10 @@ import pinImage from '../assets/images/doomsday_pins_main_1786589760678.jpg';
 import tumblerImage from '../assets/images/doomsday_tumbler_main_1786590665672.jpg';
 import mugImage from '../assets/images/doomsday_mug_main_1786591726675.jpg';
 import journalImage from '../assets/images/doomsday_journal_main_1786618938543.jpg';
+import chargerImage from '../assets/images/doomsday_wireless_charger_1786895019251.jpg';
+import deskpadImage from '../assets/images/doomsday_deskpad_main_1786895514659.jpg';
+import capImage from '../assets/images/doomsday_cap_main_1786896312312.jpg';
+import budsImage from '../assets/images/doomsday_pixel_buds_main_1786896573382.jpg';
 
 // Helper SVG generator for dark armored product renderings
 const createProductSVG = (
@@ -495,33 +499,35 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: 'doomsday-wireless-charger',
-    name: 'Doomsday Wireless Fast Charger',
-    originalName: 'Google Qi Wireless Charging Pad',
-    price: 55.00,
+    name: 'Doomsday 3-in-1 Magnetic Fast Charger',
+    originalName: 'Google Multi-Device Wireless Charging Station',
+    price: 79.00,
     category: 'tech',
     collection: 'legacy',
     badge: 'NEW',
     badgeType: 'emerald',
-    rating: 4.8,
-    reviewsCount: 52,
-    image: createProductSVG('charger', '#063B27', '#2CF598'),
-    description: '15W MagSafe-compatible wireless charging pad with an octagonal alloy frame and animated emerald energy glow ring during active power delivery.',
-    storyCopy: 'Instantly energize your mobile devices with sovereign efficiency.',
+    rating: 4.9,
+    reviewsCount: 68,
+    image: chargerImage,
+    additionalImages: [chargerImage, journalImage, mugImage],
+    description: '3-in-1 MagSafe-compatible tactical wireless charging dock with multi-device support for phone, smartwatch, and earbuds, crafted in distressed titanium with Doom crest detailing.',
+    storyCopy: 'Instantly energize your entire tactical tech loadout with sovereign power and precision magnetic alignment.',
     features: [
-      '15W Fast Wireless Output',
-      'MagSafe magnetic alignment array',
-      'Anodized aluminum heat-sink chassis',
-      'Dynamic breathing emerald LED indicator'
+      'Simultaneous 3-in-1 Wireless Output (Phone 15W, Watch 5W, Buds 5W)',
+      'MagSafe magnetic floating alignment array',
+      'Weathered titanium alloy chassis with Doom mask crest',
+      'Smart thermal regulation and emerald charging indicators'
     ],
     specs: [
-      { label: 'Input', value: 'Type-C PD 20W' },
-      { label: 'Compatibility', value: 'iPhone, Pixel, Galaxy, AirPods' },
-      { label: 'Cable Length', value: '1.5 Meter Braided Cable Included' }
+      { label: 'Input', value: 'Type-C PD 30W' },
+      { label: 'Compatibility', value: 'MagSafe iPhone, Pixel, Apple/Pixel Watch, Qi Earbuds' },
+      { label: 'Cable Length', value: '1.5 Meter Braided Latverian Cable Included' }
     ],
     colors: [
-      { name: 'Emerald Cyber Ring', hex: '#063B27' }
+      { name: 'Weathered Armor & Emerald', hex: '#063B27' },
+      { name: 'Obsidian Dark Metal', hex: '#101311' }
     ],
-    stock: 32,
+    stock: 28,
     isClassified: false
   },
   {
@@ -568,7 +574,8 @@ export const PRODUCTS: Product[] = [
     badgeType: 'emerald',
     rating: 4.9,
     reviewsCount: 28,
-    image: createProductSVG('deskpad', '#063B27', '#2CF598'),
+    image: deskpadImage,
+    additionalImages: [deskpadImage, keyboardImage, chargerImage],
     description: '900x400mm waterproof desk mat featuring a micro-textured cloth tracking surface, stitched emerald edges, and anti-slip rubber base.',
     storyCopy: 'Frame your workstation with sovereign precision and buttery mouse sensor accuracy.',
     features: [
@@ -589,33 +596,36 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: 'latverian-crest-cap',
-    name: 'Latverian Crest Embossed Cap',
+    name: 'Doomsday Distressed Tactical Cap',
     originalName: 'Google Adjustable Baseball Cap',
-    price: 36.00,
+    price: 38.00,
     category: 'apparel',
     collection: 'ashes',
     badge: 'LAST UNITS',
     badgeType: 'red',
-    rating: 4.7,
-    reviewsCount: 56,
-    image: createProductSVG('cap', '#063B27', '#B8BAB7'),
-    description: 'Structured 6-panel cotton twill snapback cap featuring a 3D molded rubber Latverian crest front emblem and metallic buckle clasp.',
-    storyCopy: 'Shield your eyes under the cover of sovereign authority.',
+    rating: 4.8,
+    reviewsCount: 62,
+    image: capImage,
+    additionalImages: [capImage, doomsdayTeeImage, backpackImage],
+    description: 'Distressed acid-washed dark canvas cap with 3D raised white embroidered Google logo, apocalyptic skyline backdrop print, and battle-weathered DOOMSDAY graffiti visor.',
+    storyCopy: 'Shield your vision against the radioactive fallout of the old world.',
     features: [
-      'Premium heavy cotton twill',
-      '3D molded rubberized crest',
-      'Laser-vented side airflow eyelets',
-      'Custom metal strap enclosure'
+      'Heavy distressed acid-wash cotton canvas',
+      '3D raised white embroidered Google branding',
+      'Apocalyptic fortress skyline crown print',
+      'Screenprinted DOOMSDAY visor graffiti & biohazard emblem',
+      'Adjustable antique metallic buckle closure'
     ],
     specs: [
-      { label: 'Size', value: 'One Size Fits Most (Adjustable)' }
+      { label: 'Size', value: 'One Size Fits Most (Adjustable Strap)' },
+      { label: 'Material', value: '100% Acid-Washed Heavyweight Cotton' }
     ],
     colors: [
-      { name: 'Dark Emerald', hex: '#063B27' },
-      { name: 'Stealth Black', hex: '#101311' }
+      { name: 'Weathered Charcoal', hex: '#1C1F1D' },
+      { name: 'Dark Emerald Wash', hex: '#063B27' }
     ],
     sizes: ['One Size'],
-    stock: 4,
+    stock: 6,
     isClassified: false
   },
   {
@@ -630,21 +640,24 @@ export const PRODUCTS: Product[] = [
     badgeType: 'crimson',
     rating: 4.9,
     reviewsCount: 93,
-    image: createProductSVG('earbuds', '#35143F', '#B8BAB7'),
-    description: 'Active Noise Canceling earbuds with custom 11mm titanium drivers, spatial audio tracking, and a metallic armored wireless charging case.',
-    storyCopy: 'Silence the noise of lesser minds. Immerse yourself in total acoustic command.',
+    image: budsImage,
+    additionalImages: [budsImage, chargerImage, keyboardImage],
+    description: 'Active Noise Canceling earbuds with custom 11mm titanium drivers, spatial audio tracking, and a battle-weathered apocalyptic stone/metal wireless charging case with biohazard graphics.',
+    storyCopy: 'Silence the noise of lesser minds. Immerse yourself in total acoustic command amidst the ruins.',
     features: [
-      '45dB Active Noise Cancellation',
-      'Custom 11mm Titanium diaphragm drivers',
-      '31 Hours battery life with charging case',
+      '45dB Active Noise Cancellation & Transparency Mode',
+      'Battle-damaged textured charging case with DOOMSDAY & Biohazard detailing',
+      'Custom 11mm Titanium diaphragm drivers with Spatial Audio',
+      '31 Hours total battery life with wireless charging case',
       'IPX4 water-resistant earbuds'
     ],
     specs: [
       { label: 'ANC Mode', value: 'Hybrid Triple-Microphone' },
-      { label: 'Bluetooth', value: 'v5.3 Multipoint' }
+      { label: 'Bluetooth', value: 'v5.3 Multipoint' },
+      { label: 'Case Charging', value: 'Qi Wireless & Type-C Fast Charge' }
     ],
     colors: [
-      { name: 'Fractured Silver', hex: '#B8BAB7' },
+      { name: 'Weathered Apocalypse Stone', hex: '#1F2220' },
       { name: 'Obsidian Black', hex: '#101311' }
     ],
     stock: 9,
