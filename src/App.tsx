@@ -18,6 +18,7 @@ import { SearchOverlay } from './components/SearchOverlay';
 import { ParticleCanvas } from './components/ParticleCanvas';
 import { SparkCursor } from './components/SparkCursor';
 import { ThermalVisionHUD } from './components/ThermalVisionHUD';
+import { DoomsWorldPortal } from './components/DoomsWorldPortal';
 import { EasterEggs } from './components/EasterEggs';
 import { Footer } from './components/Footer';
 import { CurrencyExchangeMeter } from './components/CurrencyExchangeMeter';
@@ -43,6 +44,7 @@ export default function App() {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [discountPercentage, setDiscountPercentage] = useState(0);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [isDoomsWorldOpen, setIsDoomsWorldOpen] = useState(false);
   
   // Thermal Vision State (Limited-Time FLIR Heat Map Filter)
   const [isThermalActive, setIsThermalActive] = useState(false);
@@ -227,6 +229,7 @@ export default function App() {
         isThermalActive={isThermalActive}
         thermalTimeLeft={thermalTimeLeft}
         onToggleThermalVision={handleToggleThermalVision}
+        onEnterDoomsWorld={() => setIsDoomsWorldOpen(true)}
       />
 
       {/* App Main Content Container */}
@@ -253,6 +256,7 @@ export default function App() {
                 setIsCartOpen(true);
               }
             }}
+            onEnterDoomsWorld={() => setIsDoomsWorldOpen(true)}
           />
         )}
 
@@ -490,6 +494,12 @@ export default function App() {
       <EasterEggs
         emblemClickCount={emblemClickCount}
         onResetEmblemClick={() => setEmblemClickCount(0)}
+      />
+
+      {/* Doom's World Chrono-Displacement Portal & Abandoned Building Explorer */}
+      <DoomsWorldPortal
+        isOpen={isDoomsWorldOpen}
+        onClose={() => setIsDoomsWorldOpen(false)}
       />
 
     </div>

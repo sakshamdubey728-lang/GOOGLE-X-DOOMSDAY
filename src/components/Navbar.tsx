@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, ShoppingBag, Bookmark, Volume2, VolumeX, Menu, X, Shield, ArrowRightLeft, Flame } from 'lucide-react';
+import { Search, ShoppingBag, Bookmark, Volume2, VolumeX, Menu, X, Shield, ArrowRightLeft, Flame, Zap } from 'lucide-react';
 import { soundManager } from '../utils/audio';
 import { useCurrency } from '../context/CurrencyContext';
 
@@ -14,6 +14,7 @@ interface NavbarProps {
   isThermalActive?: boolean;
   thermalTimeLeft?: number;
   onToggleThermalVision?: () => void;
+  onEnterDoomsWorld?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -27,6 +28,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   isThermalActive = false,
   thermalTimeLeft = 0,
   onToggleThermalVision,
+  onEnterDoomsWorld,
 }) => {
   const { currentCurrency, openMeter, formatPrice } = useCurrency();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -141,6 +143,21 @@ export const Navbar: React.FC<NavbarProps> = ({
             >
               {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-[#2CF598] animate-pulse" />}
             </button>
+
+            {/* Enter in Doom's World Button */}
+            {onEnterDoomsWorld && (
+              <button
+                id="navbar-enter-dooms-world-btn"
+                onClick={onEnterDoomsWorld}
+                title="Enter in Doom's World - Chrono-Displacement to 3099 A.D."
+                className="relative flex items-center space-x-1.5 px-3 py-2 rounded-lg font-tech text-xs tracking-wider transition-all cursor-pointer group bg-gradient-to-r from-[#1A0033] via-[#063B27] to-[#0D9A5F] hover:from-[#4B0082] hover:to-[#2CF598] border border-[#2CF598]/60 hover:border-[#2CF598] text-white shadow-[0_0_15px_rgba(44,245,152,0.3)] hover:shadow-[0_0_22px_rgba(44,245,152,0.6)]"
+              >
+                <Zap className="w-4 h-4 text-[#2CF598] animate-pulse group-hover:scale-110 transition-transform" />
+                <span className="font-tech text-xs tracking-wider font-extrabold hidden md:inline-block">
+                  DOOM'S WORLD
+                </span>
+              </button>
+            )}
 
             {/* Thermal Vision Toggle Button */}
             {onToggleThermalVision && (
@@ -284,6 +301,23 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
             <span className="text-xs text-[#2CF598] font-tech font-bold uppercase underline">METER ▾</span>
           </button>
+
+          {/* Mobile Enter Doom's World Button */}
+          {onEnterDoomsWorld && (
+            <button
+              onClick={() => {
+                onEnterDoomsWorld();
+                setIsMobileMenuOpen(false);
+              }}
+              className="w-full text-left px-4 py-3 rounded-lg font-tech text-sm tracking-wider flex items-center justify-between cursor-pointer bg-gradient-to-r from-[#1A0033] via-[#063B27] to-[#0D9A5F] text-white border border-[#2CF598] shadow-[0_0_15px_rgba(44,245,152,0.4)]"
+            >
+              <div className="flex items-center space-x-2">
+                <Zap className="w-4 h-4 text-[#2CF598] animate-pulse" />
+                <span className="font-bold">ENTER IN DOOMS WORLD</span>
+              </div>
+              <span className="text-xs text-[#2CF598] font-bold">WARP ➔</span>
+            </button>
+          )}
 
           {/* Mobile Thermal Vision Toggle */}
           {onToggleThermalVision && (

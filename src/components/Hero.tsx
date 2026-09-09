@@ -9,6 +9,7 @@ interface HeroProps {
   onNewArrivalsClick: () => void;
   onInspectHoodie?: () => void;
   onAddToCart?: () => void;
+  onEnterDoomsWorld?: () => void;
 }
 
 export const Hero: React.FC<HeroProps> = ({
@@ -16,6 +17,7 @@ export const Hero: React.FC<HeroProps> = ({
   onNewArrivalsClick,
   onInspectHoodie,
   onAddToCart,
+  onEnterDoomsWorld,
 }) => {
   const { formatPrice } = useCurrency();
   const [copiedCode, setCopiedCode] = useState(false);
@@ -194,6 +196,22 @@ export const Hero: React.FC<HeroProps> = ({
                   )}
                 </button>
               </div>
+
+              {/* Enter in Doom's World Portal Button */}
+              {onEnterDoomsWorld && (
+                <button
+                  type="button"
+                  id="enter-dooms-world-btn"
+                  onClick={() => {
+                    soundManager.playMetallicClick();
+                    onEnterDoomsWorld();
+                  }}
+                  className="flex items-center justify-center space-x-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#1E0630] via-[#063B27] to-[#0D9A5F] hover:from-[#3B0764] hover:via-[#0A5C3A] hover:to-[#2CF598] border border-[#2CF598]/70 hover:border-[#2CF598] text-white font-tech text-xs font-black uppercase tracking-wider shadow-[0_0_25px_rgba(44,245,152,0.4)] transition-all duration-300 cursor-pointer group"
+                >
+                  <Zap className="w-4 h-4 text-[#2CF598] animate-pulse group-hover:scale-125 transition-transform" />
+                  <span className="tracking-widest">ENTER IN DOOMS WORLD</span>
+                </button>
+              )}
 
               {/* Primary Action Button */}
               {onInspectHoodie && (
