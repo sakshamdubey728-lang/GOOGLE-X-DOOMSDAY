@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Shield, ArrowRight, Check } from 'lucide-react';
+import { Shield, ArrowRight, Check, Globe } from 'lucide-react';
 import { soundManager } from '../utils/audio';
+import { useCurrency } from '../context/CurrencyContext';
 
 interface FooterProps {
   onSelectCategory: (category: string) => void;
@@ -11,6 +12,7 @@ export const Footer: React.FC<FooterProps> = ({
   onSelectCategory,
   onOpenAwakeningIntro,
 }) => {
+  const { currentCurrency, openMeter } = useCurrency();
   const [emailInput, setEmailInput] = useState('');
   const [isSubscribed, setIsSubscribed] = useState(false);
 
@@ -157,6 +159,28 @@ export const Footer: React.FC<FooterProps> = ({
             </form>
           </div>
 
+        </div>
+
+        {/* Currency Switcher Bar in Footer */}
+        <div className="py-6 border-b border-[#2D302F]/40 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center space-x-2 text-xs font-tech text-[#8D918E]">
+            <Globe className="w-4 h-4 text-[#2CF598]" />
+            <span>SOVEREIGN EXCHANGE RATE METER:</span>
+            <span className="text-[#E5E5E0] font-bold">
+              {currentCurrency.flag} {currentCurrency.code} — {currentCurrency.name} ({currentCurrency.symbol})
+            </span>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => {
+              soundManager.playMetallicClick();
+              openMeter();
+            }}
+            className="flex items-center space-x-2 px-3.5 py-1.5 rounded-lg bg-[#101311] border border-[#2D302F] hover:border-[#0D9A5F] text-[#2CF598] font-tech text-xs tracking-wider font-bold uppercase transition-all cursor-pointer"
+          >
+            <span>CONVERT CURRENCY ▾</span>
+          </button>
         </div>
 
         {/* Bottom Copyright & Final Tagline (PRD Section 32) */}

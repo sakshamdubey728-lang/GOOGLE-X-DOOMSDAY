@@ -12,6 +12,7 @@ import chargerImage from '../assets/images/doomsday_wireless_charger_17868950192
 import deskpadImage from '../assets/images/doomsday_deskpad_main_1786895514659.jpg';
 import capImage from '../assets/images/doomsday_cap_main_1786896312312.jpg';
 import budsImage from '../assets/images/doomsday_pixel_buds_main_1786896573382.jpg';
+import premiumHoodieBanner from '../assets/images/premium_hoodie_banner_1788943621746.jpg';
 
 // Helper SVG generator for dark armored product renderings
 const createProductSVG = (
@@ -271,7 +272,7 @@ export const PRODUCTS: Product[] = [
     rating: 4.9,
     reviewsCount: 142,
     image: hoodieImage,
-    additionalImages: [hoodieImage, doomsdayTeeImage, pinImage],
+    additionalImages: [hoodieImage, premiumHoodieBanner, doomsdayTeeImage, pinImage],
     description: 'Forged with high-density Latverian-grade fleece and reinforced shoulder armor plates. Features a water-resistant finish, high-neck magnetic cowl, and an embossed Google x Doom crest.',
     storyCopy: 'Designed for the vanguard who command respect in any environment. Heavyweight 480GSM fabric engineered to withstand harsh mountain winds.',
     features: [

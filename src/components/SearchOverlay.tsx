@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Product } from '../types';
 import { Search, X, Shield, ArrowRight } from 'lucide-react';
 import { soundManager } from '../utils/audio';
+import { useCurrency } from '../context/CurrencyContext';
 
 interface SearchOverlayProps {
   isOpen: boolean;
@@ -16,13 +17,16 @@ export const SearchOverlay: React.FC<SearchOverlayProps> = ({
   products,
   onSelectProduct,
 }) => {
-  if (!isOpen) return null;
-
+  const { formatPrice } = useCurrency();
   const [query, setQuery] = useState('');
 
   useEffect(() => {
-    soundManager.playMechanicalHum();
-  }, []);
+    if (isOpen) {
+      soundManager.playMechanicalHum();
+    }
+  }, [isOpen]);
+
+  if (!isOpen) return null;
 
   const SUGGESTIONS = ['Hoodies', 'Cyber Flask', 'Keyboard', 'Backpack', 'Best Sellers', 'New Arrivals'];
 
@@ -132,7 +136,7 @@ export const SearchOverlay: React.FC<SearchOverlayProps> = ({
                     {product.name}
                   </h4>
                   <div className="font-tech text-xs text-[#2CF598] font-extrabold mt-1">
-                    ${product.price.toFixed(2)}
+                    {formatPrice(product.price)}
                   </div>
                 </div>
                 <ArrowRight className="w-4 h-4 text-[#8D918E] group-hover:text-[#2CF598] group-hover:translate-x-1 transition-transform" />

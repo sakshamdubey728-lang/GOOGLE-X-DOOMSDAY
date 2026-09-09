@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { CartItem, ShippingDetails } from '../types';
-import { X, ShieldCheck, CheckCircle2, Lock, ArrowRight } from 'lucide-react';
+import { X, ShieldCheck, CheckCircle2, Lock, ArrowRight, Globe } from 'lucide-react';
 import { soundManager } from '../utils/audio';
+import { useCurrency } from '../context/CurrencyContext';
 
 interface CheckoutModalProps {
   isOpen: boolean;
@@ -18,7 +19,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
   discountPercentage,
   onOrderComplete,
 }) => {
-  if (!isOpen) return null;
+  const { currentCurrency, formatPrice, openMeter } = useCurrency();
 
   const [step, setStep] = useState<'shipping' | 'payment' | 'confirmed'>('shipping');
   const [shipping, setShipping] = useState<ShippingDetails>({
@@ -30,6 +31,8 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
     country: 'Latveria',
     shippingMethod: 'latverian-teleport',
   });
+
+  if (!isOpen) return null;
 
   const subtotal = cartItems.reduce(
     (acc, item) => acc + item.product.price * item.quantity,
@@ -205,10 +208,21 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                 />
               </div>
 
-              <div className="pt-4 border-t border-[#2D302F] flex items-center justify-between">
+              <div className="pt-4 border-t border-[#2D302F] flex flex-wrap items-center justify-between gap-3">
                 <div>
-                  <div className="text-[10px] text-[#8D918E]">TOTAL PAYABLE</div>
-                  <div className="text-xl font-extrabold text-[#2CF598]">${grandTotal.toFixed(2)}</div>
+                  <div className="text-[10px] text-[#8D918E] uppercase flex items-center gap-1.5">
+                    <span>TOTAL PAYABLE ({currentCurrency.code})</span>
+                    <button
+                      type="button"
+                      onClick={openMeter}
+                      className="text-[#2CF598] hover:underline cursor-pointer font-bold"
+                    >
+                      [{currentCurrency.symbol} CHANGE]
+                    </button>
+                  </div>
+                  <div className="text-xl font-extrabold text-[#2CF598]">
+                    {formatPrice(grandTotal, true)}
+                  </div>
                 </div>
 
                 <button

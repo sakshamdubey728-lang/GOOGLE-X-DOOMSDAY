@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Search, ShoppingBag, Bookmark, Volume2, VolumeX, Menu, X, Shield } from 'lucide-react';
+import { Search, ShoppingBag, Bookmark, Volume2, VolumeX, Menu, X, Shield, ArrowRightLeft } from 'lucide-react';
 import { soundManager } from '../utils/audio';
+import { useCurrency } from '../context/CurrencyContext';
 
 interface NavbarProps {
   activeTab: string;
@@ -21,6 +22,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenSearch,
   onEmblemClick,
 }) => {
+  const { currentCurrency, openMeter, formatPrice } = useCurrency();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMuted, setIsMuted] = useState(soundManager.getIsMuted());
@@ -59,11 +61,22 @@ export const Navbar: React.FC<NavbarProps> = ({
       }`}
     >
       {/* Top Announcement Bar */}
-      <div className="bg-[#063B27] text-[#E5E5E0] px-4 py-1.5 text-xs font-tech tracking-widest text-center flex items-center justify-center gap-2 border-b border-[#0D9A5F]/30 overflow-hidden">
-        <span className="w-2 h-2 rounded-full bg-[#2CF598] animate-pulse" />
-        <span className="font-semibold uppercase tracking-wider">
-          SOVEREIGN DECREE: FREE TACTICAL SHIPPING ON ARTIFACTS OVER $75 // CODE: <span className="text-[#2CF598] font-bold">LATVERIA10</span>
-        </span>
+      <div className="bg-[#063B27] text-[#E5E5E0] px-4 py-1.5 text-xs font-tech tracking-widest text-center flex flex-wrap items-center justify-center gap-2 sm:gap-4 border-b border-[#0D9A5F]/30 overflow-hidden">
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-[#2CF598] animate-pulse" />
+          <span className="font-semibold uppercase tracking-wider text-[11px] sm:text-xs">
+            SOVEREIGN DECREE: FREE TACTICAL SHIPPING ON ARTIFACTS OVER {formatPrice(75)} // CODE: <span className="text-[#2CF598] font-bold">LATVERIA10</span>
+          </span>
+        </div>
+        <button
+          onClick={openMeter}
+          className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-[#101311] border border-[#2CF598]/50 hover:border-[#2CF598] text-[#2CF598] font-tech text-[10px] uppercase font-bold transition-all cursor-pointer"
+          title="Open Currency Exchange Meter"
+        >
+          <span>{currentCurrency.flag}</span>
+          <span>{currentCurrency.code} ({currentCurrency.symbol})</span>
+          <span className="text-[#B8BAB7] hidden sm:inline">• CALIBRATE METER</span>
+        </button>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -132,6 +145,29 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span className="font-tech text-xs tracking-wider hidden sm:inline-block">SCAN ARSENAL</span>
             </button>
 
+            {/* Currency Exchange Meter Trigger */}
+            <button
+              onClick={openMeter}
+              title={`Currency Exchange Meter: ${currentCurrency.name} (${currentCurrency.code}) - Click to convert`}
+              className="flex items-center space-x-1.5 px-3 py-2 rounded-lg bg-[#101311] border border-[#2D302F] hover:border-[#2CF598] transition-all cursor-pointer group emerald-box-shadow"
+            >
+              <span className="text-base select-none leading-none">{currentCurrency.flag}</span>
+              <div className="flex flex-col text-left">
+                <div className="flex items-center space-x-1">
+                  <span className="font-tech text-xs font-black tracking-wider text-[#E5E5E0] group-hover:text-[#2CF598]">
+                    {currentCurrency.code}
+                  </span>
+                  <span className="font-tech text-[10px] text-[#2CF598] font-bold">
+                    {currentCurrency.symbol}
+                  </span>
+                </div>
+                <span className="font-tech text-[8px] text-[#8D918E] tracking-widest hidden md:block uppercase leading-none">
+                  METER
+                </span>
+              </div>
+              <ArrowRightLeft className="w-3 h-3 text-[#0D9A5F] group-hover:text-[#2CF598] group-hover:rotate-180 transition-transform ml-0.5" />
+            </button>
+
             {/* Wishlist Button ("RESERVED") */}
             <button
               onClick={() => {
@@ -198,6 +234,20 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span className="text-xs text-[#565A58]">[{item.code}]</span>
             </button>
           ))}
+          {/* Mobile Currency Meter Trigger */}
+          <button
+            onClick={() => {
+              setIsMobileMenuOpen(false);
+              openMeter();
+            }}
+            className="w-full text-left px-4 py-3 rounded-lg font-tech text-sm tracking-wider flex items-center justify-between cursor-pointer bg-[#101311] text-[#2CF598] border border-[#0D9A5F]/60 hover:border-[#2CF598]"
+          >
+            <div className="flex items-center space-x-2">
+              <span className="text-base select-none">{currentCurrency.flag}</span>
+              <span>CURRENCY: {currentCurrency.code} ({currentCurrency.symbol})</span>
+            </div>
+            <span className="text-xs text-[#2CF598] font-tech font-bold uppercase underline">METER ▾</span>
+          </button>
         </div>
       )}
     </header>

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { CartItem } from '../types';
-import { X, Trash2, Plus, Minus, ArrowRight, Shield, Tag, Check } from 'lucide-react';
+import { X, Trash2, Plus, Minus, ArrowRight, Shield, Tag, Check, Globe } from 'lucide-react';
 import { soundManager } from '../utils/audio';
+import { useCurrency } from '../context/CurrencyContext';
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -22,11 +23,13 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
   onCheckout,
   onExploreClick,
 }) => {
-  if (!isOpen) return null;
+  const { currentCurrency, formatPrice, openMeter } = useCurrency();
 
   const [promoCode, setPromoCode] = useState('');
   const [discount, setDiscount] = useState(0);
   const [promoApplied, setPromoApplied] = useState(false);
+
+  if (!isOpen) return null;
 
   const subtotal = cartItems.reduce(
     (sum, item) => sum + item.product.price * item.quantity,
@@ -35,11 +38,16 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
 
   const handleApplyPromo = (e: React.FormEvent) => {
     e.preventDefault();
-    if (promoCode.trim().toUpperCase() === 'LATVERIA10') {
+    const code = promoCode.trim().toUpperCase();
+    if (code === 'LATVERIA15' || code === 'FIRST39' || code === 'HOODIE15') {
+      setDiscount(15);
+      setPromoApplied(true);
+      soundManager.playPowerPulse();
+    } else if (code === 'LATVERIA10') {
       setDiscount(10);
       setPromoApplied(true);
       soundManager.playPowerPulse();
-    } else if (promoCode.trim().toUpperCase() === 'VICTOR') {
+    } else if (code === 'VICTOR') {
       setDiscount(20);
       setPromoApplied(true);
       soundManager.playPowerPulse();
@@ -133,7 +141,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                     </div>
 
                     <div className="font-tech text-sm font-extrabold text-[#2CF598] mt-1">
-                      ${(item.product.price * item.quantity).toFixed(2)}
+                      {formatPrice(item.product.price * item.quantity)}
                     </div>
 
                     {/* Quantity Controls */}
@@ -211,17 +219,32 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 </div>
               )}
 
+              {/* Currency Selector Bar */}
+              <div className="flex items-center justify-between px-3 py-2 rounded-lg bg-[#080A09] border border-[#2D302F] text-xs font-tech">
+                <div className="flex items-center space-x-2 text-[#8D918E]">
+                  <Globe className="w-3.5 h-3.5 text-[#2CF598]" />
+                  <span>CURRENCY: <strong className="text-white">{currentCurrency.flag} {currentCurrency.code} ({currentCurrency.symbol})</strong></span>
+                </div>
+                <button
+                  type="button"
+                  onClick={openMeter}
+                  className="text-[#2CF598] hover:underline cursor-pointer font-bold uppercase tracking-wider text-[11px]"
+                >
+                  CONVERT ▾
+                </button>
+              </div>
+
               {/* Price Breakdown */}
               <div className="space-y-1.5 font-tech text-xs pt-2 border-t border-[#2D302F]/60">
                 <div className="flex justify-between text-[#8D918E]">
                   <span>SUBTOTAL</span>
-                  <span>${subtotal.toFixed(2)}</span>
+                  <span>{formatPrice(subtotal)}</span>
                 </div>
 
                 {discount > 0 && (
                   <div className="flex justify-between text-[#2CF598]">
                     <span>DISCOUNT ({discount}%)</span>
-                    <span>-${discountAmount.toFixed(2)}</span>
+                    <span>-{formatPrice(discountAmount)}</span>
                   </div>
                 )}
 
@@ -232,7 +255,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
 
                 <div className="flex justify-between text-base font-black text-metallic pt-2 border-t border-[#2D302F]">
                   <span>TOTAL</span>
-                  <span className="text-[#2CF598]">${grandTotal.toFixed(2)}</span>
+                  <span className="text-[#2CF598]">{formatPrice(grandTotal, true)}</span>
                 </div>
               </div>
 

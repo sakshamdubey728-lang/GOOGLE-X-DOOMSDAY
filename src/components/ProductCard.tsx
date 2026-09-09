@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Product } from '../types';
 import { Star, ShoppingBag, Bookmark, Eye, Check } from 'lucide-react';
 import { soundManager } from '../utils/audio';
+import { useCurrency } from '../context/CurrencyContext';
 
 interface ProductCardProps {
   product: Product;
@@ -18,6 +19,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   onToggleWishlist,
   isWishlisted,
 }) => {
+  const { formatPrice } = useCurrency();
   const [isAdded, setIsAdded] = useState(false);
 
   const handleAddToCart = (e: React.MouseEvent) => {
@@ -137,11 +139,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         <div className="flex items-center justify-between pt-3 border-t border-[#2D302F]/40">
           <div>
             <div className="font-tech font-extrabold text-base text-metallic">
-              ${product.price.toFixed(2)}
+              {formatPrice(product.price)}
             </div>
             {product.originalPrice && (
               <div className="font-tech text-[10px] text-[#726C60] line-through">
-                ${product.originalPrice.toFixed(2)}
+                {formatPrice(product.originalPrice)}
               </div>
             )}
           </div>

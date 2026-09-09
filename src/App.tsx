@@ -18,10 +18,13 @@ import { SearchOverlay } from './components/SearchOverlay';
 import { ParticleCanvas } from './components/ParticleCanvas';
 import { EasterEggs } from './components/EasterEggs';
 import { Footer } from './components/Footer';
+import { CurrencyExchangeMeter } from './components/CurrencyExchangeMeter';
+import { useCurrency } from './context/CurrencyContext';
 import { soundManager } from './utils/audio';
-import { SlidersHorizontal, ShieldAlert } from 'lucide-react';
+import { SlidersHorizontal, ShieldAlert, ArrowRightLeft } from 'lucide-react';
 
 export default function App() {
+  const { currentCurrency, openMeter } = useCurrency();
   const [showAwakeningIntro, setShowAwakeningIntro] = useState(true);
   const [activeTab, setActiveTab] = useState('home');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
@@ -182,6 +185,17 @@ export default function App() {
             onNewArrivalsClick={() => {
               setActiveTab('new');
             }}
+            onInspectHoodie={() => {
+              const hoodie = PRODUCTS.find((p) => p.id === 'latveria-tactical-hoodie');
+              if (hoodie) setSelectedProduct(hoodie);
+            }}
+            onAddToCart={() => {
+              const hoodie = PRODUCTS.find((p) => p.id === 'latveria-tactical-hoodie');
+              if (hoodie) {
+                handleAddToCart(hoodie);
+                setIsCartOpen(true);
+              }
+            }}
           />
         )}
 
@@ -255,6 +269,29 @@ export default function App() {
                   <option value="rating" className="bg-[#101311]">MOST RATED</option>
                 </select>
               </div>
+
+              {/* Currency Exchange Meter Trigger Pill */}
+              <button
+                type="button"
+                onClick={() => {
+                  soundManager.playMetallicClick();
+                  openMeter();
+                }}
+                title="Open Currency Exchange Meter to convert prices to your local currency"
+                className="flex items-center space-x-2 bg-[#101311] border border-[#2D302F] hover:border-[#0D9A5F] rounded-lg px-3 py-1.5 transition-all cursor-pointer group"
+              >
+                <ArrowRightLeft className="w-3.5 h-3.5 text-[#2CF598] group-hover:rotate-180 transition-transform duration-300" />
+                <span className="text-xs select-none">{currentCurrency.flag}</span>
+                <span className="font-tech text-xs font-bold text-[#E5E5E0] group-hover:text-[#2CF598]">
+                  {currentCurrency.code}
+                </span>
+                <span className="font-tech text-[11px] text-[#2CF598] font-bold">
+                  ({currentCurrency.symbol})
+                </span>
+                <span className="hidden sm:inline font-tech text-[10px] text-[#8D918E] group-hover:text-white uppercase tracking-wider pl-1 border-l border-[#2D302F]">
+                  METER
+                </span>
+              </button>
             </div>
           </div>
 
@@ -362,6 +399,32 @@ export default function App() {
         products={PRODUCTS}
         onSelectProduct={(p) => setSelectedProduct(p)}
       />
+
+      {/* Currency Exchange Meter Modal */}
+      <CurrencyExchangeMeter />
+
+      {/* Floating Tactical Currency Status Widget (Bottom-Left) */}
+      <div className="fixed bottom-6 left-6 z-30 hidden sm:block">
+        <button
+          onClick={() => {
+            soundManager.playMetallicClick();
+            openMeter();
+          }}
+          className="flex items-center space-x-2 px-3.5 py-2 rounded-full bg-[#101311]/90 backdrop-blur-md border border-[#2D302F] hover:border-[#2CF598] text-[#E5E5E0] hover:text-[#2CF598] shadow-[0_4px_20px_rgba(0,0,0,0.8)] transition-all cursor-pointer group"
+          title="Open Currency Exchange Meter to convert prices to your local currency"
+        >
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#2CF598] opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#2CF598]" />
+          </span>
+          <span className="text-sm select-none">{currentCurrency.flag}</span>
+          <span className="font-tech text-xs font-bold tracking-wider">{currentCurrency.code}</span>
+          <span className="font-tech text-xs text-[#2CF598] font-bold">({currentCurrency.symbol})</span>
+          <span className="text-[10px] font-tech text-[#8D918E] group-hover:text-[#2CF598] tracking-widest pl-1 border-l border-[#2D302F]">
+            METER
+          </span>
+        </button>
+      </div>
 
       {/* Hidden Easter Eggs Handler */}
       <EasterEggs

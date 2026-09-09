@@ -52,3 +52,14 @@ export interface ShippingDetails {
   country: string;
   shippingMethod: 'standard' | 'express' | 'latverian-teleport';
 }
+
+export interface Currency {
+  code: string;
+  name: string;
+  symbol: string;
+  rate: number; // 1 USD = rate units of this currency
+  flag: string;
+  decimals: number;
+  country: string;
+  badge?: string;
+}

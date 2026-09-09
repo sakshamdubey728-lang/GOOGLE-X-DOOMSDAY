@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Product } from '../types';
 import { X, Star, ShoppingBag, Bookmark, ShieldCheck, Truck, RotateCcw, Check, Zap } from 'lucide-react';
 import { soundManager } from '../utils/audio';
+import { useCurrency } from '../context/CurrencyContext';
 
 interface ProductModalProps {
   product: Product | null;
@@ -20,28 +21,34 @@ export const ProductModal: React.FC<ProductModalProps> = ({
   isWishlisted,
   onBuyNow,
 }) => {
-  if (!product) return null;
+  const { currentCurrency, formatPrice, openMeter } = useCurrency();
 
   const [selectedColor, setSelectedColor] = useState(
-    product.colors && product.colors.length > 0 ? product.colors[0].name : ''
+    product?.colors && product.colors.length > 0 ? product.colors[0].name : ''
   );
   const [selectedSize, setSelectedSize] = useState(
-    product.sizes && product.sizes.length > 0 ? product.sizes[0] : ''
+    product?.sizes && product.sizes.length > 0 ? product.sizes[0] : ''
   );
   const [isSecured, setIsSecured] = useState(false);
   const [activeTab, setActiveTab] = useState<'overview' | 'specs' | 'story'>('overview');
+
+  const [selectedImage, setSelectedImage] = useState<string>(product?.image || '');
+
+  // Sync selected image if product changes
+  React.useEffect(() => {
+    if (product) {
+      setSelectedImage(product.image);
+      setSelectedColor(product.colors && product.colors.length > 0 ? product.colors[0].name : '');
+      setSelectedSize(product.sizes && product.sizes.length > 0 ? product.sizes[0] : '');
+    }
+  }, [product]);
+
+  if (!product) return null;
 
   const galleryImages = [
     product.image,
     ...(product.additionalImages || [])
   ].filter((img, index, self) => img && self.indexOf(img) === index);
-
-  const [selectedImage, setSelectedImage] = useState<string>(product.image);
-
-  // Sync selected image if product changes
-  React.useEffect(() => {
-    setSelectedImage(product.image);
-  }, [product]);
 
   const handleAddToCart = () => {
     setIsSecured(true);
@@ -184,15 +191,24 @@ export const ProductModal: React.FC<ProductModalProps> = ({
               </p>
 
               {/* Price */}
-              <div className="flex items-baseline space-x-3 mb-6">
+              <div className="flex flex-wrap items-baseline gap-3 mb-6">
                 <span className="font-tech text-3xl font-extrabold text-[#2CF598]">
-                  ${product.price.toFixed(2)}
+                  {formatPrice(product.price)}
                 </span>
                 {product.originalPrice && (
                   <span className="font-tech text-sm text-[#726C60] line-through">
-                    ${product.originalPrice.toFixed(2)}
+                    {formatPrice(product.originalPrice)}
                   </span>
                 )}
+                <button
+                  onClick={openMeter}
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#101311] border border-[#2D302F] hover:border-[#0D9A5F] text-[11px] font-tech text-[#8D918E] hover:text-[#2CF598] transition-all cursor-pointer"
+                  title="Open Currency Exchange Meter"
+                >
+                  <span>{currentCurrency.flag}</span>
+                  <span>{currentCurrency.code}</span>
+                  <span className="text-[#0D9A5F] font-bold">METER ▾</span>
+                </button>
               </div>
 
               {/* Tabs Navigation (Overview / Specs / Story) */}
